@@ -31,7 +31,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'spin6lock/vim_sproto'
 Plugin 'tpope/vim-commentary'
 Plugin 'jremmen/vim-ripgrep'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -301,14 +301,14 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
 " nnoremap <Leader>gg :Unite grep:.<CR>
 nnoremap <Leader>gl :Unite -quick-match buffer<CR>
-nnoremap <Leader>gd :YcmCompleter GoTo<CR>
-
-let NERDTreeIgnore = ['\.pyc$', '\.meta$']
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_disable_for_files_larger_than_kb = 0
-let g:ycm_add_preview_to_completeopt=0
-set completeopt-=preview
+" nnoremap <Leader>gd :YcmCompleter GoTo<CR>
+" 
+" let NERDTreeIgnore = ['\.pyc$', '\.meta$']
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_disable_for_files_larger_than_kb = 0
+" let g:ycm_add_preview_to_completeopt=0
+" set completeopt-=preview
 
 language messages zh_CN.utf-8
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -341,12 +341,13 @@ au QuickfixCmdPost make call QfMakeConv()
 " let g:clang_use_library=1
 " let g:clang_user_options='--stdlib=libc++ -std=c++11'
 " map <c-i> <c-space>
+" let g:ycm_key_invoke_completion = '<c-l>'
+
+let g:NERDTreeNodeDelimiter = "\u00a0"
 
 function OpenNERDTree()
     :NERDTree
 endfunction
-
-let g:ycm_key_invoke_completion = '<c-l>'
 
 autocmd VimEnter * call OpenNERDTree()
 
