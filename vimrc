@@ -5,7 +5,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim/bundle/')
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -31,6 +31,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'spin6lock/vim_sproto'
 Plugin 'tpope/vim-commentary'
 Plugin 'jremmen/vim-ripgrep'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -277,23 +278,16 @@ set nowritebackup
 set ffs=unix,dos
 nnoremap <unique> <silent> <Leader>gg :call AckAllFiles()<CR>
 
-if &clipboard ==# "unnamed"
-    " fix the visual paste bug in vim
-    " vnoremap <silent>p :call g:()<CR>
-else
-    " general copy/paste.
-    " NOTE: y,p,P could be mapped by other key-mapping
-    map <unique> gy "*y
-    map <unique> gp "*p
-    map <unique> gP "*P
-    map <unique> zp "0p
-endif
+set clipboard=unnamed
 
 nnoremap <unique> <slient> <Leader>gg :call AckAllFiles()<CR>
 " map <C-P> :FufCoverageFile<CR>
-map <Leader>bl :MBEToggle<CR>
+" map <Leader>bl :MBEToggle<CR>
 map <C-Tab> :MBEbb<CR>
 map <C-S-Tab> :MBEbf<CR>
+
+nmap <Leader>nf :NERDTreeFocus<CR>
+nmap <Leader>nt :NERDTreeToggle<CR>
 
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
@@ -350,4 +344,10 @@ function OpenNERDTree()
 endfunction
 
 autocmd VimEnter * call OpenNERDTree()
+
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
