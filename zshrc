@@ -100,7 +100,7 @@ source $ZSH/oh-my-zsh.sh
 
 function git_branch_info()
 {
-    if [ -d `pwd`/.git ]; then
+    if [[ -d `pwd`/.git ]] || [[ -f `pwd`/.git ]]; then
         local branch=`git rev-parse --abbrev-ref HEAD`
         echo " $ZSH_THEME_GIT_PROMPT_PREFIX$branch$ZSH_THEME_GIT_PROMPT_SUFFIX"
     fi
@@ -112,3 +112,9 @@ $(git_branch_info) \
 $FG[105]%(!.#.»)%{$reset_color%} '
 
 RPROMPT='%{$fg[red]%}%n%{$reset_color%}'
+
+# replace vim
+if [ -f /usr/local/bin/vim ];then
+    alias vi=/usr/local/bin/vim
+    alias vim=/usr/local/bin/vim
+fi
