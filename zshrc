@@ -118,3 +118,12 @@ if [ -f /usr/local/bin/vim ];then
     alias vi=/usr/local/bin/vim
     alias vim=/usr/local/bin/vim
 fi
+
+# auto start synergy
+SYNERGY_CORE=`which synergy-core`
+if [[ -f "$SYNERGY_CORE" ]] && [[ -f $HOME/Documents/conf/synergy_config.conf ]]; then
+    local V=`ps aux | grep synergy-core | grep -v grep | awk '{print $2}'`
+    if [ -z "$V" ]; then
+        $SYNERGY_CORE --server --config $HOME/Documents/conf/synergy_config.conf
+    fi
+fi
