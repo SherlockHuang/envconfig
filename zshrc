@@ -100,8 +100,12 @@ source $ZSH/oh-my-zsh.sh
 
 function git_branch_info()
 {
-    if [[ -d `pwd`/.git ]] || [[ -f `pwd`/.git ]]; then
-        local branch=`git rev-parse --abbrev-ref HEAD`
+    # if [[ -d `pwd`/.git ]] || [[ -f `pwd`/.git ]]; then
+    #     local branch=`git rev-parse --abbrev-ref HEAD`
+    #     echo " $ZSH_THEME_GIT_PROMPT_PREFIX$branch$ZSH_THEME_GIT_PROMPT_SUFFIX"
+    # fi
+    local branch=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\\1/'`
+    if [ ! -z "$branch" ]; then
         echo " $ZSH_THEME_GIT_PROMPT_PREFIX$branch$ZSH_THEME_GIT_PROMPT_SUFFIX"
     fi
 }
