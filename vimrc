@@ -34,6 +34,10 @@ Plugin 'jremmen/vim-ripgrep'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-pathogen'
+Plugin 'vim-syntastic/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -344,7 +348,7 @@ function OpenNERDTree()
     :NERDTree
 endfunction
 
-autocmd VimEnter * call OpenNERDTree()
+" autocmd VimEnter * call OpenNERDTree()
 
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -357,4 +361,19 @@ map <silent> <s-up> :res -5<cr>
 map <silent> <s-down> :res +5<cr>
 map <silent> <s-right> :vertical resize +5<cr>
 map <silent> <s-left> :vertical resize -5<cr>
+
+let g:airline_theme='bubblegum'
+
+execute pathogen#infect()
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_lua_checkers = ['luac', 'luacheck']
+let g:syntastic_lua_luacheck_args = '--no-unused-args'
 
