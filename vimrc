@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
 Plugin 'vim-scripts/taglist.vim'
+Plugin 'tpope/vim-pathogen'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'altercation/vim-colors-solarized'
@@ -33,10 +34,9 @@ Plugin 'tpope/vim-commentary'
 Plugin 'jremmen/vim-ripgrep'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'Valloric/YouCompleteMe'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+" Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-pathogen'
 Plugin 'vim-syntastic/syntastic'
 
 " All of your Plugins must be added before the following line
@@ -293,6 +293,7 @@ map <C-S-Tab> :MBEbf<CR>
 
 nmap <Leader>nf :NERDTreeFocus<CR>
 nmap <Leader>nt :NERDTreeToggle<CR>
+nmap <Leader>nl :nohl<CR>
 
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
@@ -377,3 +378,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_lua_checkers = ['luac', 'luacheck']
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
 
+autocmd QuickFixCmdPost *grep* cwindow
+autocmd QuickFixCmdPost *log* cwindow
+
+set exrc
