@@ -382,3 +382,8 @@ autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
 
 set exrc
+
+let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
+
+nmap gs :Rg -F <cword> <CR>
+nmap gns :Rg -F <cword> --no-ignore <CR>
