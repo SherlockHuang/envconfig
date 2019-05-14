@@ -385,5 +385,11 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-nmap gs :Rg -F <cword> <CR>
-nmap gns :Rg -F <cword> --no-ignore <CR>
+map gs :Rg -F <cword><CR>
+map ga :Rg -F <cword>
+map gn :Rg -F <cword> --no-ignore<CR>
+
+nmap gw :Rg "\b<cword>\b" <CR>
+nmap gr :Rg "\b<cword>\b"
+vmap gw "oy:Rg "\b<C-R>o\b" <CR>
+vmap gr "oy:Rg "\b<C-R>o\b"
