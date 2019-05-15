@@ -310,7 +310,8 @@ nnoremap <Leader>gl :Unite -quick-match buffer<CR>
 " let g:ycm_add_preview_to_completeopt=0
 " set completeopt-=preview
 
-language messages zh_CN.utf-8
+" language messages zh_CN.utf-8
+
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:ctrlp_working_path_mode="a"
 let g:ctrlp_custom_ignore = {
