@@ -397,3 +397,16 @@ vmap fw "oy:Rg "\b<C-R>o\b" <CR>
 vmap fr "oy:Rg "\b<C-R>o\b"
 vmap fc "oy:Rg "\b<C-R>o\b" % <CR>
 
+command -bang -nargs=? QFix call QFixToggle(<bang>0)
+function! QFixToggle(forced)
+    let qfix = empty(filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"'))
+    if qfix
+        copen 10
+    else
+        cclose
+    endif
+endfunction
+
+nmap gn :cn <CR>
+nmap gl :cp <CR>
+nmap gw :QFix <CR>
