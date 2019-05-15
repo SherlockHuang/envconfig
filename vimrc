@@ -291,9 +291,9 @@ nnoremap <unique> <slient> <Leader>gg :call AckAllFiles()<CR>
 map <C-Tab> :MBEbb<CR>
 map <C-S-Tab> :MBEbf<CR>
 
-nmap <Leader>nf :NERDTreeFocus<CR>
-nmap <Leader>nt :NERDTreeToggle<CR>
-nmap <Leader>nl :nohl<CR>
+nmap tf :NERDTreeFocus<CR>
+nmap tt :NERDTreeToggle<CR>
+nmap tl :nohl<CR>
 
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
@@ -385,11 +385,14 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-map gs :Rg -F <cword><CR>
-map ga :Rg -F <cword>
-map gn :Rg -F <cword> --no-ignore<CR>
+map fs :Rg -F <cword><CR>
+map fa :Rg -F <cword>
+map fn :Rg -F <cword> --no-ignore<CR>
 
-nmap gw :Rg "\b<cword>\b" <CR>
-nmap gr :Rg "\b<cword>\b"
-vmap gw "oy:Rg "\b<C-R>o\b" <CR>
-vmap gr "oy:Rg "\b<C-R>o\b"
+nmap fc :Rg "\b<cword>\b" % <CR>
+nmap fw :Rg "\b<cword>\b" <CR>
+nmap fr :Rg "\b<cword>\b"
+vmap fw "oy:Rg "\b<C-R>o\b" <CR>
+vmap fr "oy:Rg "\b<C-R>o\b"
+vmap fc "oy:Rg "\b<C-R>o\b" % <CR>
+
