@@ -407,6 +407,9 @@ function! QFixToggle(forced)
     endif
 endfunction
 
-nmap gn :cn <CR>
-nmap gl :cp <CR>
+nmap gj :cn <CR>
+nmap gk :cp <CR>
+nmap gl :cnf <CR>
+nmap gh :cpf <CR>
 nmap gw :QFix <CR>
+
