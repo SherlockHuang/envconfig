@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/Documents/platform-tools:$PATH
+# export PATH=$HOME/Documents/platform-tools:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/pscool/.oh-my-zsh"
@@ -131,3 +131,5 @@ if [[ -f "$SYNERGY_CORE" ]] && [[ -f $HOME/Documents/conf/synergy_config.conf ]]
         $SYNERGY_CORE --server --config $HOME/Documents/conf/synergy_config.conf
     fi
 fi
+
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles

@@ -386,16 +386,23 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-map fs :Rg -F <cword><CR>
-map fa :Rg -F <cword>
-map fn :Rg -F <cword> --no-ignore<CR>
+nmap fa :Rg -F <cword>
+nmap fs :Rg -F <cword> <CR>
+nmap fc :Rg -F <cword> % <CR>
+nmap fn :Rg -F <cword> --no-ignore<CR>
+vmap fa "oy:Rg -F "<C-R>o" 
+vmap fs "oy:Rg -F "<C-R>o" <CR>
+vmap fc "oy:Rg -F "<C-R>o" % <CR>
+vmap fn "oy:Rg -F "<C-R>o" --no-ignore<CR>
 
-nmap fc :Rg "\b<cword>\b" % <CR>
-nmap fw :Rg "\b<cword>\b" <CR>
-nmap fr :Rg "\b<cword>\b"
-vmap fw "oy:Rg "\b<C-R>o\b" <CR>
-vmap fr "oy:Rg "\b<C-R>o\b"
-vmap fc "oy:Rg "\b<C-R>o\b" % <CR>
+nmap Fa :Rg "\b<cword>\b"
+nmap Fs :Rg "\b<cword>\b" <CR>
+nmap Fc :Rg "\b<cword>\b" % <CR>
+nmap Fn :Rg "\b<cword>\b" --no-ignore <CR>
+vmap Fa "oy:Rg "\b<C-R>o\b"
+vmap Fs "oy:Rg "\b<C-R>o\b" <CR>
+vmap Fc "oy:Rg "\b<C-R>o\b" % <CR>
+vmap Fn "oy:Rg "\b<C-R>o\b" --no-ignore <CR>
 
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -412,4 +419,7 @@ nmap gk :cp <CR>
 nmap gl :cnf <CR>
 nmap gh :cpf <CR>
 nmap gw :QFix <CR>
+
+imap <c-j> <Esc>o
+imap <c-k> <Esc>O
 
