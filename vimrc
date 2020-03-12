@@ -27,7 +27,7 @@ Plugin 'Shougo/unite.vim'
 " Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'kien/ctrlp.vim'
+" Plugin 'kien/ctrlp.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'spin6lock/vim_sproto'
 Plugin 'tpope/vim-commentary'
@@ -38,6 +38,8 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'codota/tabnine-vim'
+Plugin 'Yggdroot/LeaderF'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -114,7 +116,6 @@ set si " smartindent
 
 set showmatch
 set matchtime=0
-set nu
 set hid
 set nowrap
 set hls
@@ -150,10 +151,10 @@ function GrepLuaFiles()
 	exec ":copen"
 endfunction
 
-function AckAllFiles()
-	let curWord = expand("<cword>")
-	exec ":Ack " . curWord
-endfunction
+" function AckAllFiles()
+" 	let curWord = expand("<cword>")
+" 	exec ":Ack " . curWord
+" endfunction
 
 function RecursiveGrep(search_pattern)
     exec "vimgrep " . a:search_pattern . " **/*.*"
@@ -281,11 +282,11 @@ set nowritebackup
 "" let g:ackprg = 'ag --nogroup --nocolor --column'
 
 set ffs=unix,dos
-nnoremap <unique> <silent> <Leader>gg :call AckAllFiles()<CR>
+" nnoremap <unique> <silent> <Leader>gg :call AckAllFiles()<CR>
 
 set clipboard=unnamed
 
-nnoremap <unique> <slient> <Leader>gg :call AckAllFiles()<CR>
+" nnoremap <unique> <slient> <Leader>gg :call AckAllFiles()<CR>
 " map <C-P> :FufCoverageFile<CR>
 " map <Leader>bl :MBEToggle<CR>
 map <C-Tab> :MBEbb<CR>
@@ -306,24 +307,31 @@ nnoremap <Leader>gl :Unite -quick-match buffer<CR>
 " let NERDTreeIgnore = ['\.pyc$', '\.meta$']
 " let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_disable_for_files_larger_than_kb = 0
+" let g:ycm_disable_for_files_larger_than_kb = 10000
 " let g:ycm_add_preview_to_completeopt=0
 " set completeopt-=preview
 
 " language messages zh_CN.utf-8
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:ctrlp_working_path_mode="a"
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-let g:ctrlp_map = '<c-p>'
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/\.git/*,*/\.svn/*,*.o,*/debug/*,*/release/*
+" let g:ctrlp_working_path_mode="a"
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+"   \ 'file': '\v\.(exe|so|dll|o|d)$',
+"   \ 'link': 'some_bad_symbolic_links',
+"   \ }
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_max_files = 10000
+" let g:ctrlp_max_height = 15
+" let g:ctrlp_clear_cache_on_exit = 0
+" if filereadable(".ctrlpignore")
+"     let g:ctrlp_user_command = 'find %s -type f | grep -v "`cat .ctrlpignore`"'
+" endif
+" " let g:ctrlp_cmd = 'CtrlPMRU'
 
 hi Comment gui=NONE term=NONE
 au BufNewFile,BufRead *lua.bytes setf lua
-set cc=100
 
 function QfMakeConv()
    let qflist = getqflist()
@@ -372,10 +380,10 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_lua_checkers = ['luac', 'luacheck']
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
 
@@ -386,23 +394,33 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-nmap fa :Rg -F <cword>
-nmap fs :Rg -F <cword> <CR>
-nmap fc :Rg -F <cword> % <CR>
-nmap fn :Rg -F <cword> --no-ignore<CR>
-vmap fa "oy:Rg -F "<C-R>o" 
-vmap fs "oy:Rg -F "<C-R>o" <CR>
-vmap fc "oy:Rg -F "<C-R>o" % <CR>
-vmap fn "oy:Rg -F "<C-R>o" --no-ignore<CR>
+nmap mt :Leaderf rg <CR>
+nmap mm :Leaderf rg --current-buffer <CR>
+nmap ma :Leaderf rg -F --cword
+nmap ms :Leaderf rg --cword <CR>
+nmap mc :Leaderf rg -F --cword --current-buffer <CR>
+nmap mn :Leaderf rg -F --cword --no-ignore<CR>
+nmap me :Leaderf rg --next
+nmap mq :Leaderf rg --preview
+vmap ma "oy:Leaderf rg -F "<C-R>o" 
+vmap ms "oy:Leaderf rg -F "<C-R>o" <CR>
+vmap mc "oy:Leaderf rg -F "<C-R>o" --current-buffer <CR>
+vmap mn "oy:Leaderf rg -F "<C-R>o" --no-ignore<CR>
 
-nmap Fa :Rg "\b<cword>\b"
-nmap Fs :Rg "\b<cword>\b" <CR>
-nmap Fc :Rg "\b<cword>\b" % <CR>
-nmap Fn :Rg "\b<cword>\b" --no-ignore <CR>
-vmap Fa "oy:Rg "\b<C-R>o\b"
-vmap Fs "oy:Rg "\b<C-R>o\b" <CR>
-vmap Fc "oy:Rg "\b<C-R>o\b" % <CR>
-vmap Fn "oy:Rg "\b<C-R>o\b" --no-ignore <CR>
+nmap Ma :Leaderf rg --cword -w
+nmap Ms :Leaderf rg --cword -w <CR>
+nmap Mc :Leaderf rg --cword -w --current-buffer <CR>
+nmap Mn :Leaderf rg --cword -w --no-ignore <CR>
+vmap Ma "oy:Leaderf rg <C-R>o -w
+vmap Ms "oy:Leaderf rg <C-R>o -w <CR>
+vmap Mc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
+vmap Mn "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
+
+function GotoFileInNerdTree()
+    let fp = expand('%:p')
+    execute 'NERDTreeFind ' fp
+endfunction
+nmap tg :call GotoFileInNerdTree() <CR>
 
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -422,4 +440,16 @@ nmap gw :QFix <CR>
 
 imap <c-j> <Esc>o
 imap <c-k> <Esc>O
+
+highlight VertSplit cterm=NONE
+set wrap
+set linebreak
+
+let g:Lf_ShortcutF = '<C-P>'
+let g:Lf_UseVersionControlTool = 0
+
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = { 'Function': 0, 'BufTag': 0 }
 
