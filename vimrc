@@ -18,9 +18,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'altercation/vim-colors-solarized'
 " Plugin 'vim-scripts/AutoComplPop'
 " Plugin 'fholgado/minibufexpl.vim'
-Plugin 'mileszs/ack.vim'
+" Plugin 'mileszs/ack.vim'
 Plugin 'vim-scripts/a.vim'
-Plugin 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
@@ -40,6 +40,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'codota/tabnine-vim'
 Plugin 'Yggdroot/LeaderF'
+" Plugin 'ludovicchabant/vim-gutentags'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -300,7 +301,7 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 
 " unite.vim
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
-" nnoremap <Leader>gg :Unite grep:.<CR>
+" nnoremapLeader>gg :Unite grep:.<CR>
 nnoremap <Leader>gl :Unite -quick-match buffer<CR>
 " nnoremap <Leader>gd :YcmCompleter GoTo<CR>
 " 
@@ -416,6 +417,14 @@ vmap Ms "oy:Leaderf rg <C-R>o -w <CR>
 vmap Mc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
 vmap Mn "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
 
+nmap mT :Leaderf gtags --all <CR>
+nmap mM :Leaderf gtags --current-buffer <CR>
+nmap mS :Leaderf gtags --by-context <CR>
+nmap mC :Leaderf gtags --by-context --current-buffer <CR>
+vmap mS "oy:Leaderf gtags --input <C-R>o --all <CR>
+vmap mC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
+nmap mU :Leaderf gtags --update <CR>
+
 function GotoFileInNerdTree()
     let fp = expand('%:p')
     execute 'NERDTreeFind ' fp
@@ -452,4 +461,35 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = { 'Function': 0, 'BufTag': 0 }
+let g:Lf_GtagsAutoGenerate = 1
+let g:Lf_Gtagslabel = 'native-pygments'
+let g:Lf_Gtagsconf = '/Users/pscool/.globalrc'
+let g:Lf_RootMarkers= [ '.root', '.svn', '.git', '.hg' ]
+let $GTAGSLABEL = 'native-pygments'
+let $GTAGSCONF = '/Users/pscool/.globalrc'
 
+" " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+" let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" " 所生成的数据文件的名称
+" let g:gutentags_ctags_tagfile = '.tags'
+
+" " 同时开启 ctags 和 gtags 支持：
+" let g:gutentags_modules = []
+" if executable('ctags')
+" 	let g:gutentags_modules += ['ctags']
+" endif
+" if executable('gtags-cscope') && executable('gtags')
+" 	let g:gutentags_modules += ['gtags_cscope']
+" endif
+
+" " 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+" let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" " 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
+" let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+" let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+" let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" " 禁用 gutentags 自动加载 gtags 数据库的行为
+" let g:gutentags_auto_add_gtags_cscope = 0
