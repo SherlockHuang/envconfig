@@ -65,6 +65,11 @@ unlet data_dir
 unlet backup_dir
 unlet swap_dir
 
+if has('win32')
+    set pythonthreedll=python38.dll
+    set pythonthreehome="D:\Program Files (x86)\Python38-32"
+endif
+
 set makeef=error.err
 
 au FileType c,cpp,cs,swig set nomodeline
@@ -80,13 +85,14 @@ if &term =~ "xterm"
 endif
 
 if has("gui_running")
-	set guifont=Source\ Code\ Pro:h14
+	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
 	silent exec "colorscheme solarized"
    	set background=dark
 
-	set lines=40 columns=130
+	" set lines=40 columns=130
     hi Comment gui=NONE
 else
+    set guifont=Source\ Code\ Pro:h14
     hi Comment term=NONE
 endif
 
@@ -104,8 +110,8 @@ set guioptions-=T
 
 set encoding=utf-8
 set termencoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8,ucs-bom,chinese
+" set fileencoding=utf-8
+" set fileencodings=utf-8,ucs-bom,chinese
 set fileformat=dos
 set fileformats=dos
 
@@ -270,7 +276,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-set guifont=Source\ Code\ Pro:h14
 " set nobackup " make backup file and leave it around 
 set nowritebackup
 
@@ -296,8 +301,6 @@ map <C-S-Tab> :MBEbf<CR>
 nmap tf :NERDTreeFocus<CR>
 nmap tt :NERDTreeToggle<CR>
 nmap tl :nohl<CR>
-
-nnoremap <silent> <F4> :TagbarToggle<CR>
 
 " unite.vim
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
@@ -387,6 +390,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_lua_checkers = ['luac', 'luacheck']
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
+let g:sysnastic_cpp_compiler = 'g++'
 
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
@@ -450,12 +454,12 @@ nmap gw :QFix <CR>
 imap <c-j> <Esc>o
 imap <c-k> <Esc>O
 
-highlight VertSplit cterm=NONE
+highlight VertSplit cterm=NONE guibg=NONE
 set wrap
 set linebreak
 
 let g:Lf_ShortcutF = '<C-P>'
-let g:Lf_UseVersionControlTool = 0
+let g:Lf_UseVersionControlTool = 1
 
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
@@ -463,10 +467,10 @@ let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu S
 let g:Lf_PreviewResult = { 'Function': 0, 'BufTag': 0 }
 let g:Lf_GtagsAutoGenerate = 1
 let g:Lf_Gtagslabel = 'native-pygments'
-let g:Lf_Gtagsconf = '/Users/pscool/.globalrc'
+let g:Lf_Gtagsconf = $HOME . '/.globalrc'
 let g:Lf_RootMarkers= [ '.root', '.svn', '.git', '.hg' ]
 let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = '/Users/pscool/.globalrc'
+let $GTAGSCONF = $HOME . '/.globalrc'
 
 " " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
 " let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
