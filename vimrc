@@ -112,8 +112,13 @@ set encoding=utf-8
 set termencoding=utf-8
 " set fileencoding=utf-8
 " set fileencodings=utf-8,ucs-bom,chinese
-set fileformat=dos
-set fileformats=dos
+if has('win32')
+    set fileformat=dos
+    set fileformats=dos
+else
+    set fileformat=unix
+    set fileformats=unix
+endif
 
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
