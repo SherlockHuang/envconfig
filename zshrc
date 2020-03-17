@@ -133,3 +133,11 @@ if [[ -f "$SYNERGY_CORE" ]] && [[ -f $HOME/Documents/conf/synergy_config.conf ]]
 fi
 
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export PATH=/usr/local/opt/llvm/bin:$PATH:~/Documents/tools/platform-tools:~/Documents/android-ndk-r16b
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home
+export GTAGSLABEL=native-pygments
+export GTAGSCONF=/Users/pscool/.globalrc
+
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
