@@ -38,13 +38,37 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'codota/tabnine-vim'
+" Plugin 'codota/tabnine-vim'
 Plugin 'Yggdroot/LeaderF'
 " Plugin 'ludovicchabant/vim-gutentags'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" call plug#begin('~/.vim/plugged')
+" Plug 'tpope/vim-fugitive'
+" Plug 'vim-scripts/taglist.vim'
+" Plug 'tpope/vim-pathogen'
+" Plug 'scrooloose/nerdtree'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'vim-scripts/a.vim'
+" Plug 'Shougo/vimshell.vim'
+" Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/unite.vim'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'elixir-lang/vim-elixir'
+" Plug 'Lokaltog/vim-easymotion'
+" Plug 'spin6lock/vim_sproto'
+" Plug 'tpope/vim-commentary'
+" Plug 'jremmen/vim-ripgrep'
+" Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'ycm-core/YouCompleteMe'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-syntastic/syntastic'
+" Plug 'Yggdroot/LeaderF'
+" call plug#end()
 
 " setup back and swap directory
 let data_dir = $HOME.'/.data/'
