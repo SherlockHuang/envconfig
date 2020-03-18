@@ -1,74 +1,28 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin('~/.vim/bundle/')
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'tpope/vim-pathogen'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'vim-scripts/FuzzyFinder'
-Plugin 'altercation/vim-colors-solarized'
-" Plugin 'vim-scripts/AutoComplPop'
-" Plugin 'fholgado/minibufexpl.vim'
-" Plugin 'mileszs/ack.vim'
-Plugin 'vim-scripts/a.vim'
-" Plugin 'majutsushi/tagbar'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
-" Plugin 'ervandew/supertab'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'elixir-lang/vim-elixir'
-" Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'spin6lock/vim_sproto'
-Plugin 'tpope/vim-commentary'
-Plugin 'jremmen/vim-ripgrep'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'ycm-core/YouCompleteMe'
-" Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-syntastic/syntastic'
-" Plugin 'codota/tabnine-vim'
-Plugin 'Yggdroot/LeaderF'
-" Plugin 'ludovicchabant/vim-gutentags'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" call plug#begin('~/.vim/plugged')
-" Plug 'tpope/vim-fugitive'
-" Plug 'vim-scripts/taglist.vim'
-" Plug 'tpope/vim-pathogen'
-" Plug 'scrooloose/nerdtree'
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'vim-scripts/a.vim'
-" Plug 'Shougo/vimshell.vim'
-" Plug 'Shougo/vimproc.vim'
-" Plug 'Shougo/unite.vim'
-" Plug 'scrooloose/nerdcommenter'
-" Plug 'elixir-lang/vim-elixir'
-" Plug 'Lokaltog/vim-easymotion'
-" Plug 'spin6lock/vim_sproto'
-" Plug 'tpope/vim-commentary'
-" Plug 'jremmen/vim-ripgrep'
-" Plug 'octol/vim-cpp-enhanced-highlight'
-" Plug 'ycm-core/YouCompleteMe'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'vim-syntastic/syntastic'
-" Plug 'Yggdroot/LeaderF'
-" call plug#end()
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/taglist.vim'
+Plug 'tpope/vim-pathogen'
+Plug 'scrooloose/nerdtree'
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-scripts/a.vim'
+Plug 'Shougo/vimshell.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/unite.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'elixir-lang/vim-elixir'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'spin6lock/vim_sproto'
+Plug 'tpope/vim-commentary'
+Plug 'jremmen/vim-ripgrep'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'ycm-core/YouCompleteMe', { 'do' : 'git submodule update --init --recursive' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-syntastic/syntastic'
+Plug 'Yggdroot/LeaderF'
+call plug#end()
 
 " setup back and swap directory
 let data_dir = $HOME.'/.data/'
@@ -334,19 +288,21 @@ nmap tl :nohl<CR>
 " unite.vim
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
 " nnoremapLeader>gg :Unite grep:.<CR>
-nnoremap <Leader>gl :Unite -quick-match buffer<CR>
+" nnoremap <Leader>gl :Unite -quick-match buffer<CR>
 " nnoremap <Leader>gd :YcmCompleter GoTo<CR>
 " 
 " let NERDTreeIgnore = ['\.pyc$', '\.meta$']
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_disable_for_files_larger_than_kb = 10000
-" let g:ycm_add_preview_to_completeopt=0
-" set completeopt-=preview
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_disable_for_files_larger_than_kb = 10000
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
+let g:ycm_show_diagnostic_ui = 1
+set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
 " set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/\.git/*,*/\.svn/*,*.o,*/debug/*,*/release/*
 " let g:ctrlp_working_path_mode="a"
 " let g:ctrlp_custom_ignore = {
@@ -376,14 +332,14 @@ endfunction
 
 au QuickfixCmdPost make call QfMakeConv()
 
-" let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
-" let g:clang_complete_auto=1
-" let g:clang_hl_errors=1
-" let g:clang_complete_copen=0
-" let g:clang_use_library=1
-" let g:clang_user_options='--stdlib=libc++ -std=c++11'
+let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+let g:clang_complete_auto=1
+let g:clang_hl_errors=1
+let g:clang_complete_copen=0
+let g:clang_use_library=1
+let g:clang_user_options='--stdlib=libc++ -std=c++11'
 " map <c-i> <c-space>
-" let g:ycm_key_invoke_completion = '<c-l>'
+let g:ycm_key_invoke_completion = '<c-n>'
 
 let g:NERDTreeNodeDelimiter = "\u00a0"
 
@@ -415,11 +371,22 @@ set statusline+=%*
 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
+let g:syntastic_mode_map = {'mode' : 'passive'}
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_lua_checkers = ['luac', 'luacheck']
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
-let g:sysnastic_cpp_compiler = 'g++'
+
+let g:syntastic_cpp_check_header = 1
+let g:synastic_cpp_auto_refresh_includes = 1
+
+let g:synastic_c_check_header = 1
+let g:synastic_c_auto_refresh_includes = 1
+
+if has('macunix')
+    let g:synastic_c_compiler = 'clang'
+    let g:synastic_cpp_compiler = 'clang++'
+endif
 
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
@@ -457,6 +424,10 @@ nmap mC :Leaderf gtags --by-context --current-buffer <CR>
 vmap mS "oy:Leaderf gtags --input <C-R>o --all <CR>
 vmap mC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
 nmap mU :Leaderf gtags --update <CR>
+
+noremap mR :<C-U><C-R>=printf("Leaderf gtags -r %s", expand("<cword>"))<CR><CR>
+noremap mD :<C-U><C-R>=printf("Leaderf gtags -d %s", expand("<cword>"))<CR><CR>
+
 
 function GotoFileInNerdTree()
     let fp = expand('%:p')
