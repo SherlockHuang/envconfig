@@ -296,8 +296,8 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_disable_for_files_larger_than_kb = 10000
 let g:ycm_add_preview_to_completeopt=0
-let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
 let g:ycm_show_diagnostic_ui = 1
+let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
 set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
@@ -363,30 +363,30 @@ map <silent> <s-left> :vertical resize -5<cr>
 
 let g:airline_theme='bubblegum'
 
-execute pathogen#infect()
+" execute pathogen#infect()
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
-let g:syntastic_mode_map = {'mode' : 'passive'}
+" let g:syntastic_mode_map = {'mode' : 'passive'}
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_lua_checkers = ['luac', 'luacheck']
+let g:syntastic_lua_checkers = [ 'luac', 'luacheck' ]
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
 
-let g:syntastic_cpp_check_header = 1
-let g:synastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_check_header = 1
+" let g:synastic_cpp_auto_refresh_includes = 1
 
-let g:synastic_c_check_header = 1
-let g:synastic_c_auto_refresh_includes = 1
+" let g:synastic_c_check_header = 1
+" let g:synastic_c_auto_refresh_includes = 1
 
-if has('macunix')
-    let g:synastic_c_compiler = 'clang'
-    let g:synastic_cpp_compiler = 'clang++'
-endif
+" if has('macunix')
+"     let g:synastic_c_compiler = 'clang'
+"     let g:synastic_cpp_compiler = 'clang++'
+" endif
 
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
