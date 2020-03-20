@@ -374,7 +374,7 @@ let g:airline_theme='bubblegum'
 " let g:syntastic_mode_map = {'mode' : 'passive'}
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_lua_checkers = [ 'luac', 'luacheck' ]
+let g:syntastic_lua_checkers = [ 'luacheck' ]
 let g:syntastic_lua_luacheck_args = '--no-unused-args'
 
 " let g:syntastic_cpp_check_header = 1
