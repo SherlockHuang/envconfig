@@ -298,6 +298,8 @@ let g:ycm_disable_for_files_larger_than_kb = 10000
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_show_diagnostic_ui = 1
 let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
+let g:ycm_error_symbol = 'x'
+let g:ycm_diagnostics_to_display = 0
 set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
