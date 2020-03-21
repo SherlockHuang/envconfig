@@ -304,7 +304,6 @@ endif
 let g:ycm_error_symbol = 'x'
 let g:ycm_diagnostics_to_display = 0
 let g:ycm_key_invoke_completion = '<C-N>'
-let g:ycm_auto_trigger = 1
 set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
