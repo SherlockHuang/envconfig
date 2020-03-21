@@ -298,9 +298,9 @@ let g:ycm_disable_for_files_larger_than_kb = 10000
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_show_diagnostic_ui = 1
 if has('win32')
-    let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
-else
     let g:ycm_clangd_binary_path = "D:/LLVM/bin/clangd.exe"
+else
+    let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
 endif
 let g:ycm_error_symbol = 'x'
 let g:ycm_diagnostics_to_display = 0
