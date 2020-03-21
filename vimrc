@@ -64,14 +64,20 @@ if &term =~ "xterm"
     set mouse=a
 endif
 
-silent exec "colorscheme solarized8"
-set background=dark
-
 if has("gui_running")
 	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
 else
     set guifont=Source\ Code\ Pro:h14
 endif
+
+syntax on
+set hlsearch
+
+let g:solarized_termtrans=1
+colorscheme solarized8
+set background=dark
+hi Comment term=NONE gui=NONE
+hi VertSplit term=NONE guibg=NONE ctermbg=NONE ctermfg=7
 
 set wildmenu " turn on wild menu, try typing :h and press <Tab> 
 set showcmd	" display incomplete commands
@@ -106,10 +112,8 @@ set si " smartindent
 set showmatch
 set matchtime=0
 set hid
-set nowrap
+" set nowrap
 set hls
-set incsearch
-set smartcase
 
 set cindent shiftwidth=4 " Set cindent on to autoinent when editing C/C++ file, with 4 shift width
 set tabstop=4 " Set tabstop to 4 characters
@@ -124,11 +128,6 @@ set autoread " auto read same-file change ( better for vc/vim change )
 
 set foldmethod=marker foldmarker={,} foldlevel=9999
 set diffopt=filler,context:9999
-
-if &t_Co > 2 || has("gui_running")
-    syntax on
-    set hlsearch
-endif
 
 set incsearch " do incremental searching
 set ignorecase " Set search/replace pattern to ignore case 
@@ -327,7 +326,6 @@ set completeopt=longest,menu
 " endif
 " " let g:ctrlp_cmd = 'CtrlPMRU'
 
-hi Comment gui=NONE term=NONE
 au BufNewFile,BufRead *lua.bytes setf lua
 
 function QfMakeConv()
@@ -459,7 +457,6 @@ nmap gw :QFix <CR>
 imap <c-j> <Esc>o
 imap <c-k> <Esc>O
 
-highlight VertSplit cterm=NONE guibg=NONE
 set wrap
 set linebreak
 
