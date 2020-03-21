@@ -5,7 +5,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-pathogen'
 Plug 'scrooloose/nerdtree'
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'vim-scripts/a.vim'
 Plug 'Shougo/vimshell.vim'
 Plug 'Shougo/vimproc.vim'
@@ -43,6 +43,8 @@ unlet data_dir
 unlet backup_dir
 unlet swap_dir
 
+execute pathogen#infect()
+
 if has('win32')
     set pythonthreedll=python38.dll
     set pythonthreehome="D:\Program Files\Python38-2"
@@ -62,16 +64,13 @@ if &term =~ "xterm"
     set mouse=a
 endif
 
+silent exec "colorscheme solarized8"
+set background=dark
+
 if has("gui_running")
 	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
-	silent exec "colorscheme solarized"
-   	set background=dark
-
-	" set lines=40 columns=130
-    hi Comment gui=NONE
 else
     set guifont=Source\ Code\ Pro:h14
-    hi Comment term=NONE
 endif
 
 set wildmenu " turn on wild menu, try typing :h and press <Tab> 
@@ -130,6 +129,7 @@ if &t_Co > 2 || has("gui_running")
     syntax on
     set hlsearch
 endif
+
 set incsearch " do incremental searching
 set ignorecase " Set search/replace pattern to ignore case 
 set smartcase " Set smartcase mode on, If there is upper case character in the search patern, the 'ignorecase' option will be override.
