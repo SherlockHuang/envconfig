@@ -45,7 +45,7 @@ unlet swap_dir
 
 if has('win32')
     set pythonthreedll=python38.dll
-    set pythonthreehome="D:\Program Files (x86)\Python38-32"
+    set pythonthreehome="D:\Program Files\Python38-2"
 endif
 
 set makeef=error.err
@@ -297,9 +297,15 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_disable_for_files_larger_than_kb = 10000
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_show_diagnostic_ui = 1
-let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
+if has('win32')
+    let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
+else
+    let g:ycm_clangd_binary_path = "D:/LLVM/bin/clangd.exe"
+endif
 let g:ycm_error_symbol = 'x'
 let g:ycm_diagnostics_to_display = 0
+let g:ycm_key_invoke_completion = '<C-N>'
+let g:ycm_auto_trigger = 1
 set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
@@ -334,14 +340,13 @@ endfunction
 
 au QuickfixCmdPost make call QfMakeConv()
 
-let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
-let g:clang_complete_auto=1
-let g:clang_hl_errors=1
-let g:clang_complete_copen=0
-let g:clang_use_library=1
-let g:clang_user_options='--stdlib=libc++ -std=c++11'
+" let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+" let g:clang_complete_auto=1
+" let g:clang_hl_errors=1
+" let g:clang_complete_copen=0
+" let g:clang_use_library=1
+" let g:clang_user_options='--stdlib=libc++ -std=c++11'
 " map <c-i> <c-space>
-let g:ycm_key_invoke_completion = '<c-n>'
 
 let g:NERDTreeNodeDelimiter = "\u00a0"
 
