@@ -22,6 +22,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-syntastic/syntastic'
 Plug 'Yggdroot/LeaderF'
+Plug 'voldikss/vim-floaterm'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 " setup back and swap directory
@@ -116,6 +118,7 @@ set hid
 set hls
 
 set cindent shiftwidth=4 " Set cindent on to autoinent when editing C/C++ file, with 4 shift width
+set shiftwidth=4
 set tabstop=4 " Set tabstop to 4 characters
 set expandtab " Set expandtab on, the tab will be change to space automaticaly
 
@@ -179,7 +182,7 @@ augroup lua " {
     autocmd FileType lua setlocal includeexpr=substitute(v:fname,'\\.','/','g')
 augroup END " }
 
-au FileType python call s:CheckIfExpandTab() " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
+" au FileType python call s:CheckIfExpandTab() " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
 function s:CheckIfExpandTab()
     let has_noexpandtab = search('^\t','wn')
     let has_expandtab = search('^    ','wn')
@@ -229,7 +232,13 @@ endfunction
 " ------------------------------------------------------------------ 
 
 " F4:  Switch on/off TagList
-nnoremap <unique> <silent> <F4> :TlistToggle<CR>
+let g:floaterm_keymap_toggle = '<F1>'
+let g:floaterm_keymap_new    = '<F2>'
+let g:floaterm_keymap_prev   = '<F3>'
+let g:floaterm_keymap_next   = '<F4>'
+nnoremap <unique> <silent> <F5> :TlistToggle<CR>
+
+imap <unique> <silent> <F1> <ESC>:FloatermToggle<CR>
 
 let Tlist_Ctags_Cmd ='ctags' 
 let Tlist_Show_One_File = 1 " Displaying tags for only one file~
@@ -466,7 +475,7 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = { 'Function': 0, 'BufTag': 0 }
-let g:Lf_GtagsAutoGenerate = 1
+let g:Lf_GtagsAutoGenerate = 0
 let g:Lf_Gtagslabel = 'native-pygments'
 let g:Lf_Gtagsconf = $HOME . '/.globalrc'
 let g:Lf_RootMarkers= [ '.root', '.svn', '.git', '.hg' ]
