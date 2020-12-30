@@ -2,7 +2,6 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
-Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-pathogen'
 Plug 'scrooloose/nerdtree'
 Plug 'lifepillar/vim-solarized8'
@@ -17,12 +16,16 @@ Plug 'spin6lock/vim_sproto'
 Plug 'tpope/vim-commentary'
 Plug 'jremmen/vim-ripgrep'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'ycm-core/YouCompleteMe', { 'do' : 'git submodule update --init --recursive' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-syntastic/syntastic'
-Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF' , { 'do': ':LeaderfInstallCExtension' }
 Plug 'voldikss/vim-floaterm'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'ajh17/vimcompletesme'
+Plug 'skywind3000/gutentags_plus'
+Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
@@ -175,7 +178,7 @@ noremap <unique> <kPlus> zo
 noremap <unique> <kMinus> zc
 
 au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full) 
+au BufEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | ALEDisableBuffer | endif
 au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
 
 augroup lua " {
@@ -240,28 +243,6 @@ nnoremap <unique> <silent> <F5> :TlistToggle<CR>
 
 imap <unique> <silent> <F1> <ESC>:FloatermToggle<CR>
 
-let Tlist_Ctags_Cmd ='ctags' 
-let Tlist_Show_One_File = 1 " Displaying tags for only one file~
-let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself 
-let Tlist_Use_Right_Window = 1 " split to the right side of the screen 
-let Tlist_Sort_Type = "order" " sort by order or name
-let Tlist_Display_Prototype = 0 " do not show prototypes and not tags in the taglist window.
-let Tlist_Compart_Format = 1 " Remove extra information and blank lines from the taglist window.
-let Tlist_GainFocus_On_ToggleOpen = 1 " Jump to taglist window on open.
-let Tlist_Display_Tag_Scope = 1 " Show tag scope next to the tag name.
-let Tlist_Close_On_Select = 0 " Close the taglist window when a file or tag is selected.
-let Tlist_BackToEditBuffer = 0 " If no close on select, let the user choose back to edit buffer or not
-let Tlist_Enable_Fold_Column = 0 " Don't Show the fold indicator column in the taglist window.
-let Tlist_WinWidth = 40
-let Tlist_Compact_Format = 1 " do not show help
-" let Tlist_Ctags_Cmd = 'ctags --c++-kinds=+p --fields=+iaS --extra=+q --languages=c++'
-" very slow, so I disable this
-" let Tlist_Process_File_Always = 1 " To use the :TlistShowTag and the :TlistShowPrototype commands without the taglist window and the taglist menu, you should set this variable to 1.
-":TlistShowPrototype [filename] [linenumber]
-
-" let taglist support shader language as c-like language
-let tlist_hlsl_settings = 'c;d:macro;g:enum;s:struct;u:union;t:typedef;v:variable;f:function'
-
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -300,20 +281,21 @@ nmap tl :nohl<CR>
 " nnoremap <Leader>gd :YcmCompleter GoTo<CR>
 " 
 " let NERDTreeIgnore = ['\.pyc$', '\.meta$']
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_disable_for_files_larger_than_kb = 10000
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_show_diagnostic_ui = 1
-if has('win32')
-    let g:ycm_clangd_binary_path = "D:/LLVM/bin/clangd.exe"
-else
-    let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
-endif
-let g:ycm_error_symbol = 'x'
-let g:ycm_diagnostics_to_display = 0
-let g:ycm_key_invoke_completion = '<C-N>'
-set completeopt=longest,menu
+
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_disable_for_files_larger_than_kb = 10000
+" let g:ycm_add_preview_to_completeopt=0
+" let g:ycm_show_diagnostic_ui = 1
+" if has('win32')
+"     let g:ycm_clangd_binary_path = "D:/LLVM/bin/clangd.exe"
+" else
+"     let g:ycm_clangd_binary_path = "/usr/local/opt/llvm/bin/clangd"
+" endif
+" let g:ycm_error_symbol = 'x'
+" let g:ycm_diagnostics_to_display = 0
+" let g:ycm_key_invoke_completion = '<C-N>'
+" set completeopt=longest,menu
 
 " language messages zh_CN.utf-8
 
@@ -383,10 +365,12 @@ let g:airline_theme='bubblegum'
 " set statusline+=%*
 
 " let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_lua_checkers = [ 'luacheck' ]
-let g:syntastic_lua_luacheck_args = '--no-unused-args'
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_lua_checkers = [ 'luacheck' ]
+" let g:syntastic_lua_luacheck_args = '--no-unused-args'
+" let g:syntastic_cpp_checkers = [ 'clang_check' ]
+" let g:syntastic_c_checkers = [ 'clang_check' ]
 
 " let g:syntastic_cpp_check_header = 1
 " let g:synastic_cpp_auto_refresh_includes = 1
@@ -406,38 +390,38 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-nmap mt :Leaderf rg <CR>
-nmap mm :Leaderf rg --current-buffer <CR>
-nmap ma :Leaderf rg -F --cword
-nmap ms :Leaderf rg --cword <CR>
-nmap mc :Leaderf rg -F --cword --current-buffer <CR>
-nmap mn :Leaderf rg -F --cword --no-ignore<CR>
-nmap me :Leaderf rg --next
-nmap mq :Leaderf rg --preview
-vmap ma "oy:Leaderf rg -F "<C-R>o" 
-vmap ms "oy:Leaderf rg -F "<C-R>o" <CR>
-vmap mc "oy:Leaderf rg -F "<C-R>o" --current-buffer <CR>
-vmap mn "oy:Leaderf rg -F "<C-R>o" --no-ignore<CR>
+" nmap mt :Leaderf rg <CR>
+" nmap mm :Leaderf rg --current-buffer <CR>
+" nmap ma :Leaderf rg -F --cword
+" nmap ms :Leaderf rg --cword <CR>
+" nmap mc :Leaderf rg -F --cword --current-buffer <CR>
+" nmap mn :Leaderf rg -F --cword --no-ignore<CR>
+" nmap me :Leaderf rg --next
+" nmap mq :Leaderf rg --preview
+" vmap ma "oy:Leaderf rg -F "<C-R>o" 
+" vmap ms "oy:Leaderf rg -F "<C-R>o" <CR>
+" vmap mc "oy:Leaderf rg -F "<C-R>o" --current-buffer <CR>
+" vmap mn "oy:Leaderf rg -F "<C-R>o" --no-ignore<CR>
 
-nmap Ma :Leaderf rg --cword -w
-nmap Ms :Leaderf rg --cword -w <CR>
-nmap Mc :Leaderf rg --cword -w --current-buffer <CR>
-nmap Mn :Leaderf rg --cword -w --no-ignore <CR>
-vmap Ma "oy:Leaderf rg <C-R>o -w
-vmap Ms "oy:Leaderf rg <C-R>o -w <CR>
-vmap Mc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
-vmap Mn "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
+" nmap Ma :Leaderf rg --cword -w
+" nmap Ms :Leaderf rg --cword -w <CR>
+" nmap Mc :Leaderf rg --cword -w --current-buffer <CR>
+" nmap Mn :Leaderf rg --cword -w --no-ignore <CR>
+" vmap Ma "oy:Leaderf rg <C-R>o -w
+" vmap Ms "oy:Leaderf rg <C-R>o -w <CR>
+" vmap Mc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
+" vmap Mn "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
 
-nmap mT :Leaderf gtags --all <CR>
-nmap mM :Leaderf gtags --current-buffer <CR>
-nmap mS :Leaderf gtags --by-context <CR>
-nmap mC :Leaderf gtags --by-context --current-buffer <CR>
-vmap mS "oy:Leaderf gtags --input <C-R>o --all <CR>
-vmap mC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
-nmap mU :Leaderf gtags --update <CR>
+" nmap mT :Leaderf gtags --all <CR>
+" nmap mM :Leaderf gtags --current-buffer <CR>
+" nmap mS :Leaderf gtags --by-context <CR>
+" nmap mC :Leaderf gtags --by-context --current-buffer <CR>
+" vmap mS "oy:Leaderf gtags --input <C-R>o --all <CR>
+" vmap mC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
+" nmap mU :Leaderf gtags --update <CR>
 
-noremap mR :<C-U><C-R>=printf("Leaderf gtags -r %s", expand("<cword>"))<CR><CR>
-noremap mD :<C-U><C-R>=printf("Leaderf gtags -d %s", expand("<cword>"))<CR><CR>
+" noremap mR :<C-U><C-R>=printf("Leaderf gtags -r %s", expand("<cword>"))<CR><CR>
+" noremap mD :<C-U><C-R>=printf("Leaderf gtags -d %s", expand("<cword>"))<CR><CR>
 
 
 function GotoFileInNerdTree()
@@ -476,34 +460,80 @@ let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = { 'Function': 0, 'BufTag': 0 }
 let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_GtagsGutentags = 1
 let g:Lf_Gtagslabel = 'native-pygments'
 let g:Lf_Gtagsconf = $HOME . '/.globalrc'
 let g:Lf_RootMarkers= [ '.root', '.svn', '.git', '.hg' ]
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = $HOME . '/.globalrc'
 
-" " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-" let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
+endif
 
-" " 所生成的数据文件的名称
-" let g:gutentags_ctags_tagfile = '.tags'
+" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
-" " 同时开启 ctags 和 gtags 支持：
-" let g:gutentags_modules = []
-" if executable('ctags')
-" 	let g:gutentags_modules += ['ctags']
-" endif
-" if executable('gtags-cscope') && executable('gtags')
-" 	let g:gutentags_modules += ['gtags_cscope']
-" endif
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
 
-" " 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-" let g:gutentags_cache_dir = expand('~/.cache/tags')
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+	let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+	let g:gutentags_modules += ['gtags_cscope']
+	set cscopetag
+	set cscopeprg='gtags-cscope'
+endif
 
-" " 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
-" let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-" let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-" let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let g:Lf_CacheDirectory = expand('~')
+let g:gutentags_cache_dir = expand(g:Lf_CacheDirectory.'/.LfCache/gtags')
+let s:vim_tags = g:gutentags_cache_dir
 
-" " 禁用 gutentags 自动加载 gtags 数据库的行为
-" let g:gutentags_auto_add_gtags_cscope = 0
+set tags=./.tags;,.tags
+
+" 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+let g:gutentags_auto_add_gtags_cscope = 0
+
+let g:gutentags_define_advanced_commands = 1
+
+let g:gutentags_plus_switch = 1
+
+nmap <leader>mg :GscopeFind g mt:<C-R><C-W> <CR>
+
+let g:ale_linters_explicit = 0
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'] }
+" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+" let g:ale_c_cppcheck_options = ''
+" let g:ale_cpp_cppcheck_options = ''

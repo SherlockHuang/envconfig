@@ -133,6 +133,7 @@ if [[ -f "$SYNERGY_CORE" ]] && [[ -f $HOME/Documents/conf/synergy_config.conf ]]
 fi
 
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export HOMEBREW_CORE_GIT_REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
 export PATH=/usr/local/opt/llvm/bin:$PATH:~/Documents/tools/platform-tools:~/Documents/android-ndk-r16b
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home
 export GTAGSLABEL=native-pygments
