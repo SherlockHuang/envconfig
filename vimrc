@@ -27,6 +27,7 @@ Plug 'ajh17/vimcompletesme'
 Plug 'skywind3000/gutentags_plus'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'mhinz/vim-signify'
 call plug#end()
 
 " setup back and swap directory
@@ -182,7 +183,11 @@ au BufEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | ALEDisableB
 au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
 
 augroup lua " {
+    autocmd! 
     autocmd FileType lua setlocal includeexpr=substitute(v:fname,'\\.','/','g')
+    autocmd FileType lua nmap <buffer> <leader>mg :GscopeFind g mt:<C-R><C-W> <CR>
+    autocmd FileType lua nmap <buffer> <leader>mG :GscopeFind g G.<C-R><C-W><CR>
+    autocmd FileType lua nmap <buffer> <leader>Mg :GscopeFind g M.<C-R><C-W><CR>
 augroup END " }
 
 " au FileType python call s:CheckIfExpandTab() " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
@@ -270,9 +275,9 @@ set clipboard=unnamed
 map <C-Tab> :MBEbb<CR>
 map <C-S-Tab> :MBEbf<CR>
 
-nmap tf :NERDTreeFocus<CR>
-nmap tt :NERDTreeToggle<CR>
-nmap tl :nohl<CR>
+nmap <leader>tf :NERDTreeFocus<CR>
+nmap <leader>tt :NERDTreeToggle<CR>
+nmap <leader>tl :nohl<CR>
 
 " unite.vim
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
@@ -521,8 +526,6 @@ let g:gutentags_define_advanced_commands = 1
 
 let g:gutentags_plus_switch = 1
 
-nmap <leader>mg :GscopeFind g mt:<C-R><C-W> <CR>
-
 let g:ale_linters_explicit = 0
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
@@ -530,10 +533,11 @@ let g:ale_lint_delay = 500
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
+let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'] }
 let g:airline#extensions#ale#enabled = 1
 
-let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'] }
-" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-" let g:ale_c_cppcheck_options = ''
-" let g:ale_cpp_cppcheck_options = ''
+set completeopt=menu,menuone,noselect
+nmap <leader>ms :GscopeFind 
+
+nmap <leader>lf :LeaderfFunction<CR>
+nmap <leader>lg :Leaderf gtags<CR>
