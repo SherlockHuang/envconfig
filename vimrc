@@ -536,6 +536,8 @@ let g:ale_lint_on_insert_leave = 1
 let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'] }
 let g:airline#extensions#ale#enabled = 1
 
+let g:lsp_diagnostics_enabled = 0
+
 set completeopt=menu,menuone,noselect
 nmap <leader>ms :GscopeFind 
 
