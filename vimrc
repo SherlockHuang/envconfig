@@ -275,10 +275,6 @@ set clipboard=unnamed
 map <C-Tab> :MBEbb<CR>
 map <C-S-Tab> :MBEbf<CR>
 
-nmap <leader>tf :NERDTreeFocus<CR>
-nmap <leader>tt :NERDTreeToggle<CR>
-nmap <leader>tl :nohl<CR>
-
 " unite.vim
 " nnoremap <C-P> :<C-u>Unite -start-insert file_rec/async:!<CR>
 " nnoremapLeader>gg :Unite grep:.<CR>
@@ -395,36 +391,6 @@ set exrc
 
 let g:fugitive_git_executable = 'LANG=en_US.UTF8 git'
 
-" nmap mt :Leaderf rg <CR>
-" nmap mm :Leaderf rg --current-buffer <CR>
-" nmap ma :Leaderf rg -F --cword
-" nmap ms :Leaderf rg --cword <CR>
-" nmap mc :Leaderf rg -F --cword --current-buffer <CR>
-" nmap mn :Leaderf rg -F --cword --no-ignore<CR>
-" nmap me :Leaderf rg --next
-" nmap mq :Leaderf rg --preview
-" vmap ma "oy:Leaderf rg -F "<C-R>o" 
-" vmap ms "oy:Leaderf rg -F "<C-R>o" <CR>
-" vmap mc "oy:Leaderf rg -F "<C-R>o" --current-buffer <CR>
-" vmap mn "oy:Leaderf rg -F "<C-R>o" --no-ignore<CR>
-
-" nmap Ma :Leaderf rg --cword -w
-" nmap Ms :Leaderf rg --cword -w <CR>
-" nmap Mc :Leaderf rg --cword -w --current-buffer <CR>
-" nmap Mn :Leaderf rg --cword -w --no-ignore <CR>
-" vmap Ma "oy:Leaderf rg <C-R>o -w
-" vmap Ms "oy:Leaderf rg <C-R>o -w <CR>
-" vmap Mc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
-" vmap Mn "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
-
-" nmap mT :Leaderf gtags --all <CR>
-" nmap mM :Leaderf gtags --current-buffer <CR>
-" nmap mS :Leaderf gtags --by-context <CR>
-" nmap mC :Leaderf gtags --by-context --current-buffer <CR>
-" vmap mS "oy:Leaderf gtags --input <C-R>o --all <CR>
-" vmap mC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
-" nmap mU :Leaderf gtags --update <CR>
-
 " noremap mR :<C-U><C-R>=printf("Leaderf gtags -r %s", expand("<cword>"))<CR><CR>
 " noremap mD :<C-U><C-R>=printf("Leaderf gtags -d %s", expand("<cword>"))<CR><CR>
 
@@ -433,7 +399,10 @@ function GotoFileInNerdTree()
     let fp = expand('%:p')
     execute 'NERDTreeFind ' fp
 endfunction
-nmap tg :call GotoFileInNerdTree() <CR>
+nmap <leader>tg :call GotoFileInNerdTree() <CR>
+nmap <leader>tf :NERDTreeFocus<CR>
+nmap <leader>tt :NERDTreeToggle<CR>
+nmap <leader>tl :nohl<CR>
 
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -542,4 +511,31 @@ set completeopt=menu,menuone,noselect
 nmap <leader>ms :GscopeFind 
 
 nmap <leader>lf :LeaderfFunction<CR>
-nmap <leader>lg :Leaderf gtags<CR>
+nmap <leader>lt :Leaderf rg <CR>
+nmap <leader>lm :Leaderf rg --current-buffer <CR>
+nmap <leader>la :Leaderf rg -F --cword
+nmap <leader>ls :Leaderf rg --cword <CR>
+nmap <leader>lc :Leaderf rg -F --cword --current-buffer <CR>
+nmap <leader>ln :Leaderf rg -F --cword --no-ignore<CR>
+nmap <leader>le :Leaderf rg --next
+nmap <leader>lq :Leaderf rg --preview
+vmap <leader>la "oy:Leaderf rg -F "<C-R>o" 
+vmap <leader>ls "oy:Leaderf rg -F "<C-R>o" <CR>
+vmap <leader>lc "oy:Leaderf rg -F "<C-R>o" --current-buffer <CR>
+vmap <leader>ln "oy:Leaderf rg -F "<C-R>o" --no-ignore<CR>
+
+nmap <leader>La :Leaderf rg --cword -w
+nmap <leader>Ls :Leaderf rg --cword -w <CR>
+nmap <leader>Lc :Leaderf rg --cword -w --current-buffer <CR>
+nmap <leader>Ln :Leaderf rg --cword -w --no-ignore <CR>
+vmap <leader>La "oy:Leaderf rg <C-R>o -w
+vmap <leader>Ls "oy:Leaderf rg <C-R>o -w <CR>
+vmap <leader>Lc "oy:Leaderf rg <C-R>o -w --current-buffer <CR>
+vmap <leader>Ln "oy:Leaderf rg <C-R>o -w --no-ignore <CR>
+
+nmap <leader>lT :Leaderf gtags --all <CR>
+nmap <leader>lM :Leaderf gtags --current-buffer <CR>
+nmap <leader>lS :Leaderf gtags --by-context <CR>
+nmap <leader>lC :Leaderf gtags --by-context --current-buffer <CR>
+vmap <leader>lS "oy:Leaderf gtags --input <C-R>o --all <CR>
+vmap <leader>lC "oy:Leaderf gtags --input <C-R>o --current-buffer <CR>
